@@ -53,7 +53,8 @@ public class SecurityConfig {
             .formLogin(form -> form
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
-                .usernameParameter("email")      // <-- Ví dụ 1: login bằng email
+                // Không set usernameParameter -> mặc định là "username"
+                // Form sẽ gửi lên name="username"
                 .passwordParameter("password")
                 .defaultSuccessUrl("/", true)
                 .failureUrl("/login?error=true")

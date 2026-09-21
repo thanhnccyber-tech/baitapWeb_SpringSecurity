@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8">
+    <title layout:title-pattern="$CONTENT_TITLE - UTEShop">UTEShop</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+<body>
+
+<header th:replace="~{fragments/header :: header}"></header>
+
+<main layout:fragment="content">
+    <!-- Nội dung của các trang con sẽ được chèn vào đây -->
+</main>
+
+<footer style="text-align:center; padding:20px; color:#888;">
+    Copyright © UTEShop
+</footer>
+
+</body>
+</html>

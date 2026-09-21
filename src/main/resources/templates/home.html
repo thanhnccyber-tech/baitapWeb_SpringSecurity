@@ -1,17 +1,29 @@
 <!DOCTYPE html>
-<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<html lang="vi"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layouts/layout}">
 <head>
-    <meta charset="UTF-8">
     <title>Trang chủ</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
 
-<header th:replace="~{fragments/header :: header}"></header>
+<main layout:fragment="content">
+    <div class="main">
+        <h1>Trang chủ UTEShop</h1>
 
-<main class="main">
-    <h1>Trang chủ UTEShop</h1>
-    <p>Xin chào <strong th:text="${#authentication.principal.fullName}">User</strong></p>
+        <!-- Chỉ hiện khi đã đăng nhập -->
+        <p sec:authorize="isAuthenticated()">
+            Xin chào
+            <strong th:text="${#authentication.principal.fullName}">User</strong>
+        </p>
+
+        <!-- Chưa đăng nhập -->
+        <p sec:authorize="!isAuthenticated()">
+            Bạn chưa đăng nhập. <a th:href="@{/login}">Đăng nhập ngay</a>
+        </p>
+    </div>
 </main>
 
 </body>
