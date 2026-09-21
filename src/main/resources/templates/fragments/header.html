@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+
+<header th:fragment="header" class="header">
+    <a th:href="@{/}" class="brand">UTEShop</a>
+
+    <div sec:authorize="isAuthenticated()" class="user">
+        <img class="avatar"
+             th:src="${#authentication.principal.images != null and !#strings.isEmpty(#authentication.principal.images)
+                        ? #authentication.principal.images
+                        : '/images/avatar-default.png'}"
+             alt="Avatar">
+        <span th:text="${#authentication.principal.fullName}">Name</span>
+        <span th:text="${#authentication.principal.email}">email</span>
+        <span th:text="${#authentication.principal.role}">ROLE</span>
+        <form th:action="@{/logout}" method="post" style="display:inline">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+            <button type="submit">Đăng xuất</button>
+        </form>
+    </div>
+
+    <div sec:authorize="!isAuthenticated()">
+        <a th:href="@{/login}" style="color:#fff">Đăng nhập</a>
+    </div>
+</header>
+
+</body>
+</html>
