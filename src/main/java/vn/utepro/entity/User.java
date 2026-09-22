@@ -1,6 +1,8 @@
 package vn.utepro.entity;
 
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "users", uniqueConstraints = {
@@ -29,18 +31,21 @@ public class User {
     private String images;
 
     @Column(nullable = false)
-    private boolean enabled = true;
+    private boolean enabled = false;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "role_id", nullable = false)
     private Role role;
 
-    // Constructors
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Product> products = new ArrayList<>();
+
     public User() {
     }
 
     public User(Long id, String username, String email, String password,
-                String fullName, String images, boolean enabled, Role role) {
+                String fullName, String images, boolean enabled, Role role,
+                List<Product> products) {
         this.id = id;
         this.username = username;
         this.email = email;
@@ -49,9 +54,9 @@ public class User {
         this.images = images;
         this.enabled = enabled;
         this.role = role;
+        this.products = products;
     }
 
-    // Builder
     public static UserBuilder builder() {
         return new UserBuilder();
     }
@@ -63,119 +68,52 @@ public class User {
         private String password;
         private String fullName;
         private String images;
-        private boolean enabled = true;
+        private boolean enabled = false;
         private Role role;
+        private List<Product> products = new ArrayList<>();
 
         UserBuilder() {
         }
 
-        public UserBuilder id(Long id) {
-            this.id = id;
-            return this;
-        }
-
-        public UserBuilder username(String username) {
-            this.username = username;
-            return this;
-        }
-
-        public UserBuilder email(String email) {
-            this.email = email;
-            return this;
-        }
-
-        public UserBuilder password(String password) {
-            this.password = password;
-            return this;
-        }
-
-        public UserBuilder fullName(String fullName) {
-            this.fullName = fullName;
-            return this;
-        }
-
-        public UserBuilder images(String images) {
-            this.images = images;
-            return this;
-        }
-
-        public UserBuilder enabled(boolean enabled) {
-            this.enabled = enabled;
-            return this;
-        }
-
-        public UserBuilder role(Role role) {
-            this.role = role;
-            return this;
-        }
+        public UserBuilder id(Long id) { this.id = id; return this; }
+        public UserBuilder username(String username) { this.username = username; return this; }
+        public UserBuilder email(String email) { this.email = email; return this; }
+        public UserBuilder password(String password) { this.password = password; return this; }
+        public UserBuilder fullName(String fullName) { this.fullName = fullName; return this; }
+        public UserBuilder images(String images) { this.images = images; return this; }
+        public UserBuilder enabled(boolean enabled) { this.enabled = enabled; return this; }
+        public UserBuilder role(Role role) { this.role = role; return this; }
+        public UserBuilder products(List<Product> products) { this.products = products; return this; }
 
         public User build() {
-            return new User(id, username, email, password, fullName, images, enabled, role);
+            return new User(id, username, email, password, fullName, images, enabled, role, products);
         }
     }
 
-    // Getters & Setters
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
 
-    public String getUsername() {
-        return username;
-    }
+    public String getEmail() { return email; }
+    public void setEmail(String email) { this.email = email; }
 
-    public void setUsername(String username) {
-        this.username = username;
-    }
+    public String getPassword() { return password; }
+    public void setPassword(String password) { this.password = password; }
 
-    public String getEmail() {
-        return email;
-    }
+    public String getFullName() { return fullName; }
+    public void setFullName(String fullName) { this.fullName = fullName; }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+    public String getImages() { return images; }
+    public void setImages(String images) { this.images = images; }
 
-    public String getPassword() {
-        return password;
-    }
+    public boolean isEnabled() { return enabled; }
+    public void setEnabled(boolean enabled) { this.enabled = enabled; }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+    public Role getRole() { return role; }
+    public void setRole(Role role) { this.role = role; }
 
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
-
-    public String getImages() {
-        return images;
-    }
-
-    public void setImages(String images) {
-        this.images = images;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
+    public List<Product> getProducts() { return products; }
+    public void setProducts(List<Product> products) { this.products = products; }
 }

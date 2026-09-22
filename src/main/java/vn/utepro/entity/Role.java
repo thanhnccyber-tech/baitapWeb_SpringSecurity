@@ -13,7 +13,6 @@ public class Role {
     @Column(nullable = false, unique = true, length = 50)
     private String name;
 
-    // Constructors
     public Role() {
     }
 
@@ -22,7 +21,6 @@ public class Role {
         this.name = name;
     }
 
-    // Builder
     public static RoleBuilder builder() {
         return new RoleBuilder();
     }
@@ -49,20 +47,9 @@ public class Role {
         }
     }
 
-    // Getters & Setters
-    public Long getId() {
-        return id;
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
 }
